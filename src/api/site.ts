@@ -7,10 +7,10 @@ export const getEvent = async (id: number): Promise<Event | false> => {
   return json.data.event as Event ?? false;
 }
 
-export const searchDoc = async (eventId: number, document: string): Promise<SearchResult | false> => {
-  const json = await req.get(`/events/${eventId}/search?cpf=${document}`);
+export const searchCPF = async (eventId: number, cpf: string): Promise<SearchResult | false> => {
+  const json = await req.get(`/events/${eventId}/search?cpf=${cpf}`);
   if (json.data.person && json.data.personMatched) {
-    return json.data;
+    return json.data as SearchResult;
   }
   return false;
 }

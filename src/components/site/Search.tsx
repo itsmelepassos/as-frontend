@@ -15,11 +15,11 @@ export const Search = ({ id }: Props) => {
   const [results, setResults] = useState<SearchResult>();
   const [loading, setLoading] = useState(false);
 
-  const handleSearchButton = async (doc: string) => {
-    if (!doc) return;
+  const handleSearchButton = async (cpf: string) => {
+    if (!cpf) return;
 
     setLoading(true);
-    const result = await api.searchDoc(id, doc);
+    const result = await api.searchDoc(id, cpf);
     setLoading(false);
     if (!result) return alert("OOPS! Seu CPF não foi encontrado!");
 
