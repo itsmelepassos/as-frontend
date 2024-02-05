@@ -1,35 +1,35 @@
-"use cilent";
+"use client"
 
-import { SearchResult } from "@/types/searchResult";
+import { SearchResult } from "@/types/SearchResult";
 import { useState } from "react";
 import { SearchForm } from "./SearchForm";
-import * as api from "@/api/site";
+import * as api from '@/api/site';
 import { SearchReveal } from "./SearchReveal";
-import { loadBindings } from "next/dist/build/swc";
 
 type Props = {
-  id: number;
-};
-
+    id: number;
+}
 export const Search = ({ id }: Props) => {
-  const [results, setResults] = useState<SearchResult>();
-  const [loading, setLoading] = useState(false);
+    const [results, setResults] = useState<SearchResult>();
+    const [loading, setLoading] = useState(false);
 
-  const handleSearchButton = async (cpf: string) => {
-    if (!cpf) return;
+    const handleSearchButton = async (cpf: string) => {
+        if (!cpf) return;
+        setLoading(true);
+        const result = await api.searchCPF(id, cpf);
+        setLoading(false);
+        if (!result) return alert('Desculpe, não encontramos seu CPF.');
 
-    setLoading(true);
-    const result = await api.searchCPF(id, cpf);
-    setLoading(false);
-    if (!result) return alert("OOPS! Seu CPF não foi encontrado!");
+        setResults(result);
+    }
 
-    setResults(result);
-  };
-
-  return (
-    <section className="bg-grey-900 p-5 rounded">
-      {!results && <SearchForm loading={loading} onSearchButton={handleSearchButton} />}
-      {results && <SearchReveal results={results} />}
-    </section>
-  );
-};
+    return (
+        <section className="bg-gray-900 p-5 rounded">
+            {!results && <SearchForm
+                onSearchButton={handleSearchButton}
+                loading={loading}
+            />}
+            {results && <SearchReveal results={results} />}
+        </section>
+    );
+}
