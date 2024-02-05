@@ -19,7 +19,7 @@ export const Search = ({ id }: Props) => {
     if (!cpf) return;
 
     setLoading(true);
-    const result = await api.searchDoc(id, cpf);
+    const result = await api.searchCPF(id, cpf);
     setLoading(false);
     if (!result) return alert("OOPS! Seu CPF não foi encontrado!");
 
